@@ -22,7 +22,7 @@ defmodule Randnews.MixProject do
   defp deps do
     [
       {:floki, "~> 0.21"},
-      {:tesla, "~> 1.2.1"},
+      {:tesla, "~> 1.2"},
       {:hackney, "~> 1.14"},
       {:iconv, "~> 1.0.10"}
     ]
