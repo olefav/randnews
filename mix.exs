@@ -5,8 +5,8 @@ defmodule Randnews.MixProject do
     [
       app: :randnews,
       version: "0.1.0",
-      elixir: "~> 1.7",
-      start_permanent: Mix.env() == :prod,
+      elixir: "~> 1.9",
+      start_permanent: Application.fetch_env!(:randnews, :env) == :prod,
       deps: deps()
     ]
   end
