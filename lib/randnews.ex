@@ -3,7 +3,7 @@ defmodule Randnews do
   Documentation for Randnews.
   """
 
-  @sites ["NV", "Pravda", "5", "112", "Censor"]
+  @sites ["NV", "Pravda", "5", "Censor"]
 
   def dump(file_path, pages_count, sites \\ @sites) do
     File.open(file_path, [:write, encoding: :utf8], fn file ->
