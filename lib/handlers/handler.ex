@@ -9,8 +9,11 @@ defmodule Randnews.Handler do
   end
 
   def load_page(site, page_number) do
-    loader_name = String.to_existing_atom("Elixir.Randnews.Loader#{site}")
-    parser_name = String.to_existing_atom("Elixir.Randnews.Parser#{site}")
+    [lang, site_name] = String.split(site, "_")
+    normalized_lang = String.upcase(lang)
+    normalized_site = String.capitalize(site_name)
+    loader_name = String.to_existing_atom("Elixir.Randnews.#{normalized_lang}.Loader#{normalized_site}")
+    parser_name = String.to_existing_atom("Elixir.Randnews.Parser#{normalized_site}")
 
     Randnews.Loader.get(loader_name, page_number)
     |> Randnews.Parser.extract_news_headers(parser_name)

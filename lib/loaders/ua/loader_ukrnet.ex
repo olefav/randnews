@@ -1,4 +1,4 @@
-defmodule Randnews.LoaderUkrnet do
+defmodule Randnews.UA.LoaderUkrnet do
   @behaviour Randnews.Loader
 
   @impl Randnews.Loader
