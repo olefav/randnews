@@ -5,7 +5,7 @@ defmodule Randnews.MixProject do
     [
       app: :randnews,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -22,7 +22,7 @@ defmodule Randnews.MixProject do
   defp deps do
     [
       {:floki, "~> 0.21"},
-      {:tesla, "~> 1.2.1"},
+      {:tesla, "~> 1.2"},
       {:hackney, "~> 1.14"},
       {:iconv, "~> 1.0.10"}
     ]

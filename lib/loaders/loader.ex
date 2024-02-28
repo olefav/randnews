@@ -7,10 +7,20 @@ defmodule Randnews.Loader do
   end
 
   def get(impl, page_number) do
-    {:ok, %{headers: h, body: b}} =
-      Tesla.get(impl.base_url <> impl.page_path_modifier(page_number))
+    get_page(impl, page_number)
+    |> process_page()
+  end
 
+  defp get_page(impl, page_number) do
+    Tesla.get(impl.base_url <> impl.page_path_modifier(page_number))
+  end
+
+  defp process_page({:ok, %{headers: h, body: b}}) do
     process_content_type(get_content_type(h), b)
+  end
+
+  defp process_page({:error, _}) do
+    ""
   end
 
   defp get_content_type(headers) do
