@@ -23,7 +23,11 @@ defmodule Randnews.UA.Pravda do
 
   defp url_for_page(page) when is_integer(page) do
     next_date = Date.utc_today() |> Date.add(-page)
-    date_part = :io_lib.format('~2..0B~2..0B~4..0B', [next_date.day, next_date.month, next_date.year]) |> to_string()
+
+    date_part =
+      :io_lib.format(~c"~2..0B~2..0B~4..0B", [next_date.day, next_date.month, next_date.year])
+      |> to_string()
+
     "#{@initial_url}date_#{date_part}/"
   end
 
@@ -36,7 +40,7 @@ defmodule Randnews.UA.Pravda do
     floki_data
     |> Floki.find(~s(.article_header > a))
     |> Enum.reduce([], fn item, acc ->
-      [ process_header(item) | acc]
+      [process_header(item) | acc]
     end)
   end
 

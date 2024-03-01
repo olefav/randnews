@@ -14,10 +14,13 @@ defmodule Randnews.UA.Ukrnet do
   end
 
   defp get_by_url(url, extra_params \\ %{}) do
-    params = %{section_slug: "main"}
-             |> Map.merge(extra_params)
+    params =
+      %{section_slug: "main"}
+      |> Map.merge(extra_params)
 
-    {:ok, %{headers: _h, body: body, status: 200}} = Randnews.JsonLoaderClient.post(url, params, headers: [{"X-Content-Language", "uk"}])
+    {:ok, %{headers: _h, body: body, status: 200}} =
+      Randnews.JsonLoaderClient.post(url, params, headers: [{"X-Content-Language", "uk"}])
+
     body
   end
 
@@ -28,8 +31,9 @@ defmodule Randnews.UA.Ukrnet do
   end
 
   def set_next_part_params(_current_part_params, part_data, _extracted_news_headers) do
-    continue = part_data
-           |> Map.get("has_next")
+    continue =
+      part_data
+      |> Map.get("has_next")
 
     part_params(part_data, continue)
   end
@@ -39,10 +43,11 @@ defmodule Randnews.UA.Ukrnet do
   end
 
   defp part_params(part_data, true) do
-    prev_id = part_data
-    |> Map.get("data")
-    |> List.last()
-    |> Map.get("id")
+    prev_id =
+      part_data
+      |> Map.get("data")
+      |> List.last()
+      |> Map.get("id")
 
     {:next, prev_id}
   end

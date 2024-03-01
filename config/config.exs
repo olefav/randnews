@@ -25,11 +25,12 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :randnews, env: config_env()
 
-config :randnews, sources: [
-  "ua_pravda",
-  "ua_nv",
-  "ua_ukrnet"
-]
+config :randnews,
+  sources: [
+    "ua_pravda",
+    "ua_nv",
+    "ua_ukrnet"
+  ]
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

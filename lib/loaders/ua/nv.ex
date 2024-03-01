@@ -34,7 +34,7 @@ defmodule Randnews.UA.Nv do
     floki_data
     |> Floki.find(~s(div.title))
     |> Enum.reduce([], fn {_el, _attrs, [text]}, acc ->
-      [ String.trim(text) | acc]
+      [String.trim(text) | acc]
     end)
   end
 

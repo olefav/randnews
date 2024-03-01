@@ -7,7 +7,11 @@ defmodule Randnews.Loader do
     news_headers
   end
 
-  defp load_part(_site_module, _part_info, news_headers, %{news_loaded_count: news_loaded_count, news_to_load_count: news_to_load_count}) when news_loaded_count >= news_to_load_count do
+  defp load_part(_site_module, _part_info, news_headers, %{
+         news_loaded_count: news_loaded_count,
+         news_to_load_count: news_to_load_count
+       })
+       when news_loaded_count >= news_to_load_count do
     news_headers
   end
 
@@ -15,7 +19,9 @@ defmodule Randnews.Loader do
     part_data = site_module.get(part_params)
 
     extracted_news_headers = site_module.extract_news_headers(part_data)
-    next_part_params = site_module.set_next_part_params(part_params, part_data, extracted_news_headers)
+
+    next_part_params =
+      site_module.set_next_part_params(part_params, part_data, extracted_news_headers)
 
     next_options = set_next_options(options, part_data, extracted_news_headers)
 
@@ -37,6 +43,10 @@ defmodule Randnews.Loader do
 
   defp set_next_options(current_options, _part_data, extracted_news_headers) do
     already_loaded_news_count = current_options.news_loaded_count
-    %{current_options | news_loaded_count: already_loaded_news_count + length(extracted_news_headers)}
+
+    %{
+      current_options
+      | news_loaded_count: already_loaded_news_count + length(extracted_news_headers)
+    }
   end
 end
