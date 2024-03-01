@@ -26,9 +26,8 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 config :randnews, env: config_env()
 
 config :randnews, sources: [
-  "ua_censor",
-  "ua_nv",
   "ua_pravda",
+  "ua_nv",
   "ua_ukrnet"
 ]
 

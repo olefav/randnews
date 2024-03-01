@@ -7,6 +7,7 @@ defmodule Randnews.MixProject do
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps()
     ]
   end
@@ -18,13 +19,18 @@ defmodule Randnews.MixProject do
     ]
   end
 
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:floki, "~> 0.21"},
       {:tesla, "~> 1.2"},
       {:hackney, "~> 1.14"},
-      {:iconv, "~> 1.0.10"}
+      {:iconv, "~> 1.0.10"},
+      {:jason, "~> 1.4.1"}
     ]
   end
 end

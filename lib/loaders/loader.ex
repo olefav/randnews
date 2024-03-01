@@ -1,41 +1,42 @@
 defmodule Randnews.Loader do
-  @callback base_url() :: String.t()
-  @callback page_path_modifier(integer) :: String.t()
-
-  def get(impl) do
-    get(impl, 0)
+  def load(site_module, count) do
+    load_part(site_module, :initial, [], %{news_loaded_count: 0, news_to_load_count: count})
   end
 
-  def get(impl, page_number) do
-    get_page(impl, page_number)
-    |> process_page()
+  defp load_part(_site_module, :stop, news_headers, _options) do
+    news_headers
   end
 
-  defp get_page(impl, page_number) do
-    Tesla.get(impl.base_url <> impl.page_path_modifier(page_number))
+  defp load_part(_site_module, _part_info, news_headers, %{news_loaded_count: news_loaded_count, news_to_load_count: news_to_load_count}) when news_loaded_count >= news_to_load_count do
+    news_headers
   end
 
-  defp process_page({:ok, %{headers: h, body: b}}) do
-    process_content_type(get_content_type(h), b)
+  defp load_part(site_module, part_params, news_headers, options) do
+    part_data = site_module.get(part_params)
+
+    extracted_news_headers = site_module.extract_news_headers(part_data)
+    next_part_params = site_module.set_next_part_params(part_params, part_data, extracted_news_headers)
+
+    next_options = set_next_options(options, part_data, extracted_news_headers)
+
+    load_part(
+      site_module,
+      next_part_params,
+      news_headers ++ extracted_news_headers,
+      next_options
+    )
   end
 
-  defp process_page({:error, _}) do
-    ""
+  defp set_next_options(current_options, :stop, _extracted_news_headers) do
+    %{current_options | news_to_load_count: 0}
   end
 
-  defp get_content_type(headers) do
-    Enum.into(headers, %{})["content-type"] |> String.downcase()
+  defp set_next_options(current_options, _part_data, []) do
+    %{current_options | news_to_load_count: 0}
   end
 
-  defp process_content_type("text/html", body) do
-    body
-  end
-
-  defp process_content_type("text/html; charset=utf-8", body) do
-    body
-  end
-
-  defp process_content_type("text/html; charset=windows-1251", body) do
-    :iconv.convert("windows-1251", "utf-8", body)
+  defp set_next_options(current_options, _part_data, extracted_news_headers) do
+    already_loaded_news_count = current_options.news_loaded_count
+    %{current_options | news_loaded_count: already_loaded_news_count + length(extracted_news_headers)}
   end
 end
