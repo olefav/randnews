@@ -2,8 +2,6 @@
 
 Randnews is a made-for-fun tool for generating random news headers via [Markov chains](https://en.wikipedia.org/wiki/Markov_chain).
 Current news sources include the following sources:
-- [5 канал](https://www.5.ua/)
-- [Цензор.НЕТ](https://censor.net.ua/ua/)
 - [НВ](https://nv.ua/ukr/)
 - [Українська правда](https://www.pravda.com.ua/)
 - [ukr.net](https://www.ukr.net/)

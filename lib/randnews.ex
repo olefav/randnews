@@ -3,14 +3,18 @@ defmodule Randnews do
   Documentation for Randnews.
   """
 
-  @sites ["NV", "Pravda", "5", "Censor"]
+  @sites Application.compile_env(:randnews, :sources)
 
-  def dump(file_path, pages_count, sites \\ @sites) do
+  def dump(file_path, news_count, sites \\ @sites) do
     File.open(file_path, [:write, encoding: :utf8], fn file ->
-      data =
-        Enum.reduce(sites, [], fn site, list ->
-          Enum.concat(Randnews.Handler.load(site, pages_count), list)
+      stream =
+        Task.async_stream(sites, fn site ->
+          Randnews.Handler.load(site, news_count)
         end)
+
+      data =
+        stream
+        |> Enum.reduce([], fn {:ok, news}, list -> Enum.concat(news, list) end)
 
       Enum.each(data, fn line ->
         file

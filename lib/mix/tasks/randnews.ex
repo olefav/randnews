@@ -64,7 +64,7 @@ defmodule Mix.Tasks.Randnews do
         Keyword.merge(
           [
             file: "news.txt",
-            count: 5
+            count: 50
           ],
           args
         )
