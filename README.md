@@ -5,6 +5,7 @@ Current news sources include the following sources:
 - [НВ](https://nv.ua/ukr/)
 - [Українська правда](https://www.pravda.com.ua/)
 - [ukr.net](https://www.ukr.net/)
+- [fun.24tv.ua](https://fun.24tv.ua/)
 
 ## Prerequisites
 
