@@ -8,9 +8,15 @@ defmodule Randnews do
   def dump(file_path, news_count, sites \\ @sites) do
     File.open(file_path, [:write, encoding: :utf8], fn file ->
       stream =
-        Task.async_stream(sites, fn site ->
-          Randnews.Handler.load(site, news_count)
-        end)
+        Task.async_stream(
+          sites,
+          Randnews.Handler,
+          :load,
+          [news_count],
+          # 10 minutes should be enough for a single site
+          timeout: 600_000,
+          ordered: false
+        )
 
       data =
         stream
