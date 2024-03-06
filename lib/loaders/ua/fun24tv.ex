@@ -2,6 +2,7 @@ defmodule Randnews.UA.Fun24tv do
   @behaviour Randnews.SiteModule
 
   @url "https://api.24tv.ua/news/list"
+  @pause_interval 500
   @news_part_count 20
 
   def get(:initial) do
@@ -9,6 +10,8 @@ defmodule Randnews.UA.Fun24tv do
   end
 
   def get({:next, last_end_date}) do
+    # don't overload the API
+    Process.sleep(@pause_interval)
     get_content(last_end_date)
   end
 

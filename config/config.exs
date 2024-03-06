@@ -29,7 +29,8 @@ config :randnews,
   sources: [
     "ua_pravda",
     "ua_nv",
-    "ua_ukrnet"
+    "ua_ukrnet",
+    "ua_fun24tv"
   ]
 
 # It is also possible to import configuration files, relative to this
