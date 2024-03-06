@@ -1,4 +1,11 @@
 defmodule Randnews.Loader do
+  @moduledoc """
+  The main Loader module.
+
+  load/2 is its only interface, it accepts a site_module which is required to implement Randnews.SiteModule behaviour, and the expected count of news to be loaded.
+  The count argument is the "preferred" number of news headers, but the output might have less data when there is no way of extracting more items out of a news source.
+  """
+
   def load(site_module, count) do
     load_part(site_module, :initial, [], %{news_loaded_count: 0, news_to_load_count: count})
   end
