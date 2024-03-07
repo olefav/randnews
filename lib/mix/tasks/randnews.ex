@@ -57,7 +57,6 @@ defmodule Mix.Tasks.Randnews do
 
   defp dump(args) do
     Application.ensure_all_started(:hackney)
-    Application.ensure_all_started(:iconv)
 
     if Keyword.has_key?(args, :help) do
       show_help_message(:dump)
