@@ -3,9 +3,7 @@ defmodule Randnews do
   Documentation for Randnews.
   """
 
-  @sites Application.compile_env(:randnews, :sources)
-
-  def dump(file_path, news_count, sites \\ @sites) do
+  def dump(file_path, news_count, sites) do
     File.open(file_path, [:write, encoding: :utf8], fn file ->
       stream =
         Task.async_stream(
