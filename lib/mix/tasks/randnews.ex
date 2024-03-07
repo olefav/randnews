@@ -9,7 +9,9 @@ defmodule Mix.Tasks.Randnews do
         strict: [
           count: :integer,
           help: :boolean,
-          file: :string
+          file: :string,
+          only: :string,
+          skip: :string
         ]
       )
 
@@ -69,7 +71,9 @@ defmodule Mix.Tasks.Randnews do
           args
         )
 
-      Randnews.dump(arguments[:file], arguments[:count])
+      sites = Randnews.Util.SiteSelector.invoke(args)
+
+      Randnews.dump(arguments[:file], arguments[:count], sites)
     end
   end
 
